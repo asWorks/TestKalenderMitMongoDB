@@ -43,11 +43,17 @@ namespace MongoDB_Test
             InitializeComponent();
             ReadAllDocuments();
             DatabaseEF.MessageTime += DatabaseEF_MessageTime;
+            Database.MessageTime += Database_MessageTime;
+        }
+
+        private void Database_MessageTime(long obj)
+        {
+            tbETime.Text = obj.ToString();
         }
 
         private void DatabaseEF_MessageTime(long obj)
         {
-            throw new NotImplementedException();
+            tbETime.Text = obj.ToString();
         }
 
         private void dgBook_MouseUp(object sender, MouseButtonEventArgs e)

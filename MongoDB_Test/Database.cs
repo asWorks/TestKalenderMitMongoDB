@@ -10,6 +10,16 @@ namespace MongoDB_Test
 {
    public static class Database
     {
+
+        public static event Action<long> MessageTime;
+
+        public static void onRaiseMessageTime(long msg)
+        {
+            if (MessageTime != null)
+            {
+                MessageTime(msg);
+            }
+        }
         public static List<Patient> GetPatienten()
         {
             List<Patient> liste = new List<Patient> { new Patient { Id = 1, Name = "Arpad Stöver" }, new Patient { Id = 2, Name = "Michael Stöver" } };
@@ -61,7 +71,8 @@ namespace MongoDB_Test
 
             }
 
-            var res =(double) sw.ElapsedMilliseconds / 1000;
+            var res = sw.ElapsedMilliseconds;
+            onRaiseMessageTime(res);
             return liste;
         }
 
