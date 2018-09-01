@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MongoDB_Test"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1800">
     <Grid>
         <Grid.Resources>
             <DataTemplate x:Key="BehandlerTemplate">
-                <Border CornerRadius="3" BorderBrush="#FF1B4CF1" BorderThickness="1" >
+                <Border CornerRadius="3" BorderBrush="#FF1B4CF1" BorderThickness="2" >
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Uhrzeit}"/>
+                        <TextBlock Text="{Binding Uhrzeit, StringFormat= : {0:HH:mm}}"/>
                         <TextBlock Text="{Binding BehandlerName}"/>
                         <TextBlock Text="{Binding PatientenName}"/>
                     </StackPanel>
@@ -37,43 +37,78 @@
 
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="474*"/>
-            <ColumnDefinition Width="71*"/>
-            <ColumnDefinition Width="247*"/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="93*"/>
-            <RowDefinition Height="42*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="56*"/>
-            <RowDefinition Height="51*"/>
-            <RowDefinition Height="67*"/>
-            <RowDefinition Height="40*"/>
+          
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgBook" HorizontalAlignment="Left" Height="127" VerticalAlignment="Top" Width="33" Margin="53,10,0,0" Grid.RowSpan="3" MouseUp="dgBook_MouseUp" Grid.Row="3"/>
-        <Label Content="Id" HorizontalAlignment="Left" Margin="16,56,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1" Height="26" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="tbId" HorizontalAlignment="Left" Height="23" Margin="22,60,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="198" Grid.Column="2"/>
-        <Label Content="Title" HorizontalAlignment="Left" Margin="16,4,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1" Height="26" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <TextBox x:Name="tbTitle" HorizontalAlignment="Left" Height="23" Margin="22,8,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="199" Grid.Column="2" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+       <DataGrid x:Name="dgBook" Grid.RowSpan="1" MouseUp="dgBook_MouseUp" Grid.Column="2"/>
+        <StackPanel>
+           
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Id" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Width="60
+                       " Height="26" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="tbId" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="198" Grid.Column="2"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Title" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Width="60"  Height="26" Grid.ColumnSpan="2" Grid.Row="1"/>
+                <TextBox x:Name="tbTitle" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="199" Grid.Column="2" Grid.Row="1" RenderTransformOrigin="0.5,0.5"/>
+            </StackPanel>
 
-        </TextBox>
-        <Label Content="Price" HorizontalAlignment="Left" Margin="16,8,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1" Height="26" Grid.ColumnSpan="2" Grid.Row="2"/>
-        <TextBox x:Name="tbPrice" HorizontalAlignment="Left" Height="23" Margin="22,12,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="198" Grid.Column="2" Grid.Row="2"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Price" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"  Width="60" Height="26" Grid.ColumnSpan="1" Grid.Row="0"/>
+                <TextBox x:Name="tbPrice" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="198" Grid.Column="0" Grid.Row="2"/>
+            </StackPanel>
 
-        <StackPanel Width="120" HorizontalAlignment="Left" Grid.RowSpan="2">
-            <Button x:Name="btnLoadMongo" Content="Load Mongo" Click="btnLoadMongo_Click"/>
-            <Button x:Name="btnCreateMongo" Content="Create Mongo" Click="btnCreateMongo_Click"/>
-            <Button x:Name="btnLoadEF" Content="Load EF" Click="btnLoadEF_Click"/>
-            <Button x:Name="btnCreateEF" Content="Create EF" Click="btnCreateEF_Click"/>
+            <StackPanel Width="120" HorizontalAlignment="Left" Grid.RowSpan="1">
+                <Button x:Name="btnLoadMongo" Content="Load Mongo" Click="btnLoadMongo_Click"/>
+                <Button x:Name="btnCreateMongo" Content="Create Mongo" Click="btnCreateMongo_Click"/>
+                <Button x:Name="btnLoadEF" Content="Load EF" Click="btnLoadEF_Click"/>
+                <Button x:Name="btnCreateEF" Content="Create EF" Click="btnCreateEF_Click"/>
+                <Button x:Name="btnClearGrid" Content="Clear Grids" Click="btnClearGrid_Click"/>
+                <Button x:Name="btnClearDBs" Content="Clear DBs" Click="btnClearDBs_Click"/>
 
-            <TextBox x:Name="tbETime" Height="40" Width="100" Background="Beige"/>
 
+
+
+                <TextBox x:Name="tbETime" Height="40" Width="100" Background="Beige"/>
+
+            </StackPanel>
+
+            <StackPanel>
+                <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="3" Click="btnAdd_Click"/>
+                <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="4" Click="btnUpdate_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="5" Click="btnDelete_Click"/>
+            </StackPanel>
         </StackPanel>
+        <ListBox Grid.RowSpan="1" Grid.Column="1" Margin="130,0,0,0">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBoxItem>
+                <ListBox x:Name="LBTermineMo" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
 
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="3" Click="btnAdd_Click"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="4" Click="btnUpdate_Click"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="31" Grid.Column="2" Grid.Row="5" Click="btnDelete_Click"/>
-        <ListBox x:Name="LBTermine" ItemTemplate="{StaticResource TerminTemplate}"  Height="359" Margin="126,10,60,0" Grid.RowSpan="6" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            </ListBoxItem>
+            <ListBoxItem>
+                <ListBox x:Name="LBTermineDi" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+            </ListBoxItem>
+            <ListBoxItem>
+                <ListBox x:Name="LBTermineMi" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+            </ListBoxItem>
+            <ListBoxItem>
+                <ListBox x:Name="LBTermineDo" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+            </ListBoxItem>
+            <ListBoxItem>
+                <ListBox x:Name="LBTermineFr" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+            </ListBoxItem>
+        </ListBox>
+        <!--<ListBox x:Name="LBTermine" ItemTemplate="{StaticResource TerminTemplate}"  Height="359" Margin="126,10,60,0" Grid.RowSpan="6" VerticalAlignment="Top" Grid.ColumnSpan="2"/>-->
+
 
     </Grid>
 </Window>

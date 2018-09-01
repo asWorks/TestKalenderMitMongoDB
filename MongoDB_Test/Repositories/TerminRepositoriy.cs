@@ -29,6 +29,12 @@ namespace MongoDB_Test.Repositories
             return list;
         }
 
+        public void ClearTermine()
+        {
+            db.DropCollection("Termine");
+            db.CreateCollection("Termine");
+        }
+
 
     }
 }

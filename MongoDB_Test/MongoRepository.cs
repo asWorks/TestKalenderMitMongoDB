@@ -50,8 +50,12 @@ namespace MongoDB_Test
 
         }
 
-     
 
+        public static void ClearTermine()
+        {
+            db.DropCollection("Termine");
+            db.CreateCollection("Termine");
+        }
 
 
 

@@ -11,7 +11,7 @@ namespace MongoDB_Test.Models.EF
     public class BehandlerPatientenTermin
     {
        
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     
         public DateTime Datum { get; set; }
     
@@ -29,10 +29,15 @@ namespace MongoDB_Test.Models.EF
         public string BehandlerName { get; set; }
 
 
+        public BehandlerPatientenTermin()
+        {
+
+        }
+
         public BehandlerPatientenTermin(DateTime datum,DateTime uhrzeit,int behandlerID,
                                         int patientenID, string behandlerName, string patientenName)
         {
-            Id = Guid.NewGuid();
+            
             Datum = datum;
             Uhrzeit = uhrzeit;
             BehandlerID = behandlerID;

@@ -11,18 +11,23 @@ namespace MongoDB_Test.Models.EF
    public class Termin
     {
        
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
        
         public DateTime Datum { get; set; }
       
         public DateTime Uhrzeit { get; set; }
        
-        public List<BehandlerPatientenTermin> BehandlerPatientenTermine { get; set; }
+        public virtual ICollection<BehandlerPatientenTermin> BehandlerPatientenTermine { get; set; }
 
         public Termin(DateTime datum, DateTime uhrzeit)
         {
             Datum = datum;
             Uhrzeit = uhrzeit;
+        }
+
+        public Termin()
+        {
+
         }
 
         public Termin(DateTime datum, DateTime uhrzeit,List<BehandlerPatientenTermin> termine)

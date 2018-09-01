@@ -1,20 +1,13 @@
 ﻿
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB_Test.Models.EF;
+using MongoDB_Test.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MongoDB_Test
 {
@@ -23,10 +16,11 @@ namespace MongoDB_Test
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static MongoClient client = new MongoClient();
+        private static IMongoDatabase db = client.GetDatabase("TestWPFDB");
+        private static IMongoCollection<Book> collection = db.GetCollection<Book>("books");
 
-        static MongoClient client = new MongoClient();
-        static IMongoDatabase db = client.GetDatabase("TestWPFDB");
-        static IMongoCollection<Book> collection = db.GetCollection<Book>("books");
+
 
         public void ReadAllDocuments()
         {
@@ -87,6 +81,7 @@ namespace MongoDB_Test
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             collection.DeleteOne(b => b.Id == ObjectId.Parse(tbId.Text));
+
             ReadAllDocuments();
         }
 
@@ -113,8 +108,8 @@ namespace MongoDB_Test
             // });
 
             var t = new Repositories.TerminRepositoriy();
-           // t.addTermine(Database.GetTermine());
-            LBTermine.ItemsSource = t.GetAllTermine();
+            // t.addTermine(Database.GetTermine());
+            // LBTermine.ItemsSource = t.GetAllTermine();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -126,7 +121,19 @@ namespace MongoDB_Test
         {
             var t = new Repositories.TerminRepositoriy();
             // t.addTermine(Database.GetTermine());
-            LBTermine.ItemsSource = t.GetAllTermine();
+            //LBTermine.ItemsSource = t.GetAllTermine();
+
+            List<MongoDB_Test.Models.Termin> TermineMo = t.GetAllTermine();
+           // dgBook.ItemsSource = TermineMo;
+
+            //IEnumerable<MongoDB_Test.Models.Termin> Test= TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) == 0);
+            //LBTermineMo.ItemsSource = TermineMo;
+            LBTermineMo.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) < 0).OrderBy(o=>o.Uhrzeit);      
+               
+            LBTermineDi.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 3, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
+            LBTermineMi.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 3, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 4, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
+            LBTermineDo.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 4, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 5, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
+            LBTermineFr.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 5, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 6, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
         }
 
         private void btnCreateMongo_Click(object sender, RoutedEventArgs e)
@@ -140,7 +147,17 @@ namespace MongoDB_Test
         {
             var t = new Repositories.TerminRepositoriyEF();
             // t.addTermine(Database.GetTermine());
-            LBTermine.ItemsSource = t.GetAllTermine();
+            // LBTermine.ItemsSource = t.GetAllTermine();
+
+            List<Termin> TermineEF = t.GetAllTermine();
+
+            LBTermineMo.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
+            LBTermineDi.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
+            LBTermineMi.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 3, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
+            LBTermineDo.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 4, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
+            LBTermineFr.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 5, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
+
+
         }
 
         private void btnCreateEF_Click(object sender, RoutedEventArgs e)
@@ -150,6 +167,25 @@ namespace MongoDB_Test
             t.addTermine(DatabaseEF.GetTermine());
             t.SaveChanges();
             //LBTermine.ItemsSource = t.GetAllTermine();
+        }
+
+        private void btnClearGrid_Click(object sender, RoutedEventArgs e)
+        {
+            LBTermineMo.ItemsSource = null;
+            LBTermineDi.ItemsSource = null;
+            LBTermineMi.ItemsSource = null;
+            LBTermineDo.ItemsSource = null;
+            LBTermineFr.ItemsSource = null;
+        }
+
+        private void btnClearDBs_Click(object sender, RoutedEventArgs e)
+        {
+            var r_ef = new TerminRepositoriyEF();
+            r_ef.ClearTermine();
+
+            var r_mo = new TerminRepositoriy();
+            r_mo.ClearTermine();
+
         }
     }
 }

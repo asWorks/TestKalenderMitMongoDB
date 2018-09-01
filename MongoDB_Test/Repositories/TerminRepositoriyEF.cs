@@ -1,13 +1,11 @@
-﻿using MongoDB.Driver;
-using MongoDB_Test.Models.EF;
+﻿using MongoDB_Test.Models.EF;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MongoDB_Test.Repositories
 {
     public class TerminRepositoriyEF
     {
-        TerminModel db;
+        private TerminModel db;
 
         public TerminRepositoriyEF()
         {
@@ -24,7 +22,7 @@ namespace MongoDB_Test.Repositories
         public void addTermine(List<Termin> termine)
         {
             db.Termine.AddRange(termine);
-           
+
         }
 
         public List<Termin> GetAllTermine()
@@ -32,6 +30,14 @@ namespace MongoDB_Test.Repositories
             List<Termin> list = new List<Termin>(db.Termine);
 
             return list;
+        }
+
+        public void ClearTermine()
+        {
+            db.Database.ExecuteSqlCommand("delete from dbo.BehandlerPatientenTermins");
+            db.Database.ExecuteSqlCommand("delete from dbo.Termins");
+
+
         }
 
         public void SaveChanges()
