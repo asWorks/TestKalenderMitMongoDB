@@ -77,5 +77,32 @@ namespace MongoDB_Test
             collection.DeleteOne(b => b.Id == ObjectId.Parse(tbId.Text));
             ReadAllDocuments();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //var r = new BookRepository();
+            ////r.adddBook("test", 12, "Methusalem", 921);
+            ////r.adddBook("Bibel", 26.80, "Diverse", 0);
+
+
+
+            //r.adddBook(new Book("Neues Kompendium",112.19), 
+            //    new List<Author> { new Author ( "Rosenstein", 89 )
+            //    ,new Author("Earl Grey",47)
+            //    , new Author("HenningStreet",74)
+            //    ,new Author("Green, Marquess of",51)
+            //    }  );
+
+            //r.adddBook(new Book("Scheitern als Weg", 112.19),
+            // new List<Author> { new Author ( "War nix", 89 )
+            //    ,new Author("Boah Eeeh",47)
+            //    , new Author("Altah Faltah",74)
+            //    ,new Author("Schnurz Pieep-Egal",51)
+            // });
+
+            var t = new Repositories.TerminRepositoriy();
+           // t.addTermine(Database.GetTermine());
+            LBTermine.ItemsSource = t.GetAllTermine();
+        }
     }
 }
