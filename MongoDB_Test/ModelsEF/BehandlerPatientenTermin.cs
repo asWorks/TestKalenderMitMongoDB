@@ -2,13 +2,14 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MongoDB_Test.Models.EF
 {
-    public class BehandlerPatientenTermin
+    public class BehandlerPatientenTermin:INotifyPropertyChanged
     {
        
         public int Id { get; set; }
@@ -20,12 +21,43 @@ namespace MongoDB_Test.Models.EF
      
         public int BehandlerID { get; set; }
 
-      
-        public int PatientenID { get; set; }
 
-        public string PatientenName { get; set; }
+        //public int PatientenID { get; set; }
 
-       
+        //public string PatientenName { get; set; }
+
+
+        private int _PatientenID;
+        public int PatientenID
+        {
+            get { return _PatientenID; }
+            set
+            {
+                if (value != _PatientenID)
+                {
+                    _PatientenID = value;
+                    OnPropertyChanged("PatientenID");
+                    //  isDirty = true;
+                }
+            }
+        }
+
+        private string _PatientenName;
+        public string PatientenName
+        {
+            get { return _PatientenName; }
+            set
+            {
+                if (value != _PatientenName)
+                {
+                    _PatientenName = value;
+                    OnPropertyChanged("PatientenName");
+                    //  isDirty = true;
+                }
+            }
+        }
+
+
         public string BehandlerName { get; set; }
 
 
@@ -44,6 +76,19 @@ namespace MongoDB_Test.Models.EF
             PatientenID = patientenID;
             BehandlerName = behandlerName;
             PatientenName = patientenName;
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
         }
 
 

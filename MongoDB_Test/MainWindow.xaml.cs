@@ -20,7 +20,7 @@ namespace MongoDB_Test
         private static IMongoDatabase db = client.GetDatabase("TestWPFDB");
         private static IMongoCollection<Book> collection = db.GetCollection<Book>("books");
 
-
+        TerminRepositoriyEF terminRepositoryEF;
 
         public void ReadAllDocuments()
         {
@@ -38,6 +38,7 @@ namespace MongoDB_Test
             ReadAllDocuments();
             DatabaseEF.MessageTime += DatabaseEF_MessageTime;
             Database.MessageTime += Database_MessageTime;
+            terminRepositoryEF = new TerminRepositoriyEF();
         }
 
         private void Database_MessageTime(long obj)
@@ -145,11 +146,11 @@ namespace MongoDB_Test
 
         private void btnLoadEF_Click(object sender, RoutedEventArgs e)
         {
-            var t = new Repositories.TerminRepositoriyEF();
+            //var t = new Repositories.TerminRepositoriyEF();
             // t.addTermine(Database.GetTermine());
             // LBTermine.ItemsSource = t.GetAllTermine();
 
-            List<Termin> TermineEF = t.GetAllTermine();
+            List<Termin> TermineEF = terminRepositoryEF.GetAllTermine();
 
             LBTermineMo.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
             LBTermineDi.ItemsSource = TermineEF.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) == 0).OrderBy(o => o.Uhrzeit);
@@ -163,9 +164,9 @@ namespace MongoDB_Test
         private void btnCreateEF_Click(object sender, RoutedEventArgs e)
         {
 
-            var t = new Repositories.TerminRepositoriyEF();
-            t.addTermine(DatabaseEF.GetTermine());
-            t.SaveChanges();
+           // var t = new Repositories.TerminRepositoriyEF();
+            terminRepositoryEF.addTermine(DatabaseEF.GetTermine());
+            terminRepositoryEF.SaveChanges();
             //LBTermine.ItemsSource = t.GetAllTermine();
         }
 
@@ -186,6 +187,44 @@ namespace MongoDB_Test
             var r_mo = new TerminRepositoriy();
             r_mo.ClearTermine();
 
+        }
+
+        private void LBTermineDi_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Termin t = (Termin)LBTermineDi.SelectedItem;
+            if (t != null)
+            {
+                BehandlerPatientenTermin bpt = t.BehandlerPatientenTermine.Where(n => n.BehandlerID ==1).SingleOrDefault();
+                bpt.PatientenName ="Huch Ach Nee";
+                bpt.PatientenID = 99;
+                terminRepositoryEF.SaveChanges();
+
+            }
+
+        }
+
+        void SetRessource()
+        {
+
+            //var templ = (DataTemplate)this.FindResource("TerminTemplate");
+            //WeekdayListBox.ItemTemplate = templ;
+
+        }
+
+        private void lbBehandler_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+            var x = (System.Windows.Controls.ListBox)sender;
+            BehandlerPatientenTermin bpt =(BehandlerPatientenTermin) x.SelectedItem;
+
+            if (bpt != null)
+            {
+               
+                bpt.PatientenName = "Huch Ach Nee";
+                bpt.PatientenID = 99;
+                terminRepositoryEF.SaveChanges();
+
+            }
         }
     }
 }

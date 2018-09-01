@@ -11,9 +11,9 @@
             <DataTemplate x:Key="BehandlerTemplate">
                 <Border CornerRadius="3" BorderBrush="#FF1B4CF1" BorderThickness="2" >
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Uhrzeit, StringFormat= : {0:HH:mm}}"/>
-                        <TextBlock Text="{Binding BehandlerName}"/>
-                        <TextBlock Text="{Binding PatientenName}"/>
+                        <!--<TextBlock Text="{Binding Uhrzeit, StringFormat= : {0:HH:mm}}"/>-->
+                        <TextBlock Text="{Binding BehandlerName}" FontSize="12"/>
+                        <TextBlock Text="{Binding PatientenName,Mode=TwoWay}" FontSize="12"/>
                     </StackPanel>
                 </Border>
             </DataTemplate>
@@ -21,9 +21,9 @@
             <DataTemplate x:Key="TerminTemplate">
                 <StackPanel>
 
-                    <TextBlock Text="{Binding Uhrzeit}"/>
-                    <TextBlock Text="{Binding Datum}"/>
-                    <ListBox ItemsSource="{Binding BehandlerPatientenTermine}" ItemTemplate="{StaticResource BehandlerTemplate}">
+                    <TextBlock Text="{Binding Uhrzeit, StringFormat= : {0:HH:mm}}" FontFamily="Arial Black" FontSize="16"/>
+                    <!--<TextBlock Text="{Binding Datum}"/>-->
+                    <ListBox x:Name="lbBehandler" ItemsSource="{Binding BehandlerPatientenTermine}" ItemTemplate="{StaticResource BehandlerTemplate}" MouseUp="lbBehandler_MouseUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -95,7 +95,7 @@
 
             </ListBoxItem>
             <ListBoxItem>
-                <ListBox x:Name="LBTermineDi" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+                <ListBox x:Name="LBTermineDi" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2" MouseUp="LBTermineDi_MouseUp"/>
             </ListBoxItem>
             <ListBoxItem>
                 <ListBox x:Name="LBTermineMi" ItemTemplate="{StaticResource TerminTemplate}" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
