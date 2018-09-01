@@ -1,5 +1,6 @@
 namespace MongoDB_Test
 {
+    using MongoDB_Test.Models.EF;
     using System;
     using System.Data.Entity;
     using System.Linq;
@@ -21,6 +22,8 @@ namespace MongoDB_Test
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
+        public virtual DbSet<Termin> Termine { get; set; }
+        public virtual DbSet<BehandlerPatientenTermin> BehandlerPatientenTermine { get; set; }
     }
 
     //public class MyEntity

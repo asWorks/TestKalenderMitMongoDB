@@ -42,6 +42,12 @@ namespace MongoDB_Test
         {
             InitializeComponent();
             ReadAllDocuments();
+            DatabaseEF.MessageTime += DatabaseEF_MessageTime;
+        }
+
+        private void DatabaseEF_MessageTime(long obj)
+        {
+            throw new NotImplementedException();
         }
 
         private void dgBook_MouseUp(object sender, MouseButtonEventArgs e)
@@ -103,6 +109,41 @@ namespace MongoDB_Test
             var t = new Repositories.TerminRepositoriy();
            // t.addTermine(Database.GetTermine());
             LBTermine.ItemsSource = t.GetAllTermine();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnLoadMongo_Click(object sender, RoutedEventArgs e)
+        {
+            var t = new Repositories.TerminRepositoriy();
+            // t.addTermine(Database.GetTermine());
+            LBTermine.ItemsSource = t.GetAllTermine();
+        }
+
+        private void btnCreateMongo_Click(object sender, RoutedEventArgs e)
+        {
+            var t = new Repositories.TerminRepositoriy();
+            t.addTermine(Database.GetTermine());
+            //LBTermine.ItemsSource = t.GetAllTermine();
+        }
+
+        private void btnLoadEF_Click(object sender, RoutedEventArgs e)
+        {
+            var t = new Repositories.TerminRepositoriyEF();
+            // t.addTermine(Database.GetTermine());
+            LBTermine.ItemsSource = t.GetAllTermine();
+        }
+
+        private void btnCreateEF_Click(object sender, RoutedEventArgs e)
+        {
+
+            var t = new Repositories.TerminRepositoriyEF();
+            t.addTermine(DatabaseEF.GetTermine());
+            t.SaveChanges();
+            //LBTermine.ItemsSource = t.GetAllTermine();
         }
     }
 }
