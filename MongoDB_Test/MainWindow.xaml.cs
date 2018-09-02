@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MongoDB_Test
 {
@@ -19,8 +20,7 @@ namespace MongoDB_Test
         private static MongoClient client = new MongoClient();
         private static IMongoDatabase db = client.GetDatabase("TestWPFDB");
         private static IMongoCollection<Book> collection = db.GetCollection<Book>("books");
-
-        TerminRepositoriyEF terminRepositoryEF;
+        private TerminRepositoriyEF terminRepositoryEF;
 
         public void ReadAllDocuments()
         {
@@ -125,12 +125,12 @@ namespace MongoDB_Test
             //LBTermine.ItemsSource = t.GetAllTermine();
 
             List<MongoDB_Test.Models.Termin> TermineMo = t.GetAllTermine();
-           // dgBook.ItemsSource = TermineMo;
+            // dgBook.ItemsSource = TermineMo;
 
             //IEnumerable<MongoDB_Test.Models.Termin> Test= TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) == 0);
             //LBTermineMo.ItemsSource = TermineMo;
-            LBTermineMo.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) < 0).OrderBy(o=>o.Uhrzeit);      
-               
+            LBTermineMo.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 1, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
+
             LBTermineDi.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 2, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 3, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
             LBTermineMi.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 3, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 4, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
             LBTermineDo.ItemsSource = TermineMo.Where(l => l.Datum.CompareTo(new DateTime(2018, 9, 4, 0, 0, 0)) > 0 && l.Datum.CompareTo(new DateTime(2018, 9, 5, 0, 0, 0)) < 0).OrderBy(o => o.Uhrzeit);
@@ -164,7 +164,7 @@ namespace MongoDB_Test
         private void btnCreateEF_Click(object sender, RoutedEventArgs e)
         {
 
-           // var t = new Repositories.TerminRepositoriyEF();
+            // var t = new Repositories.TerminRepositoriyEF();
             terminRepositoryEF.addTermine(DatabaseEF.GetTermine());
             terminRepositoryEF.SaveChanges();
             //LBTermine.ItemsSource = t.GetAllTermine();
@@ -194,8 +194,8 @@ namespace MongoDB_Test
             Termin t = (Termin)LBTermineDi.SelectedItem;
             if (t != null)
             {
-                BehandlerPatientenTermin bpt = t.BehandlerPatientenTermine.Where(n => n.BehandlerID ==1).SingleOrDefault();
-                bpt.PatientenName ="Huch Ach Nee";
+                BehandlerPatientenTermin bpt = t.BehandlerPatientenTermine.Where(n => n.BehandlerID == 1).SingleOrDefault();
+                bpt.PatientenName = "Arpad Stoever";
                 bpt.PatientenID = 99;
                 terminRepositoryEF.SaveChanges();
 
@@ -203,7 +203,7 @@ namespace MongoDB_Test
 
         }
 
-        void SetRessource()
+        private void SetRessource()
         {
 
             //var templ = (DataTemplate)this.FindResource("TerminTemplate");
@@ -214,17 +214,42 @@ namespace MongoDB_Test
         private void lbBehandler_MouseUp(object sender, MouseButtonEventArgs e)
         {
 
-            var x = (System.Windows.Controls.ListBox)sender;
-            BehandlerPatientenTermin bpt =(BehandlerPatientenTermin) x.SelectedItem;
+            //var x = (System.Windows.Controls.ListBox)sender;
+            //BehandlerPatientenTermin bpt =(BehandlerPatientenTermin) x.SelectedItem;
 
-            if (bpt != null)
+            //if (bpt != null)
+            //{
+            //    //x.Background =  Brushes.Yellow;
+            //    bpt.PatientenName = "Arpad Stoever";
+            //    bpt.PatientenID = 99;
+            //    terminRepositoryEF.SaveChanges();
+
+            //}
+        }
+
+        private void TextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var x = (System.Windows.Controls.TextBlock)sender;
+            if (e.ChangedButton== MouseButton.Left)
             {
                
-                bpt.PatientenName = "Huch Ach Nee";
-                bpt.PatientenID = 99;
-                terminRepositoryEF.SaveChanges();
-
+                x.Text = "Arpad Stoever";
+                x.Background = Brushes.Yellow;
             }
+            else if (e.ChangedButton== MouseButton.Right)
+            {
+                x.Text = "Nicht belegt";
+                x.Background = Brushes.White;
+            }
+            else if (e.ChangedButton==MouseButton.Middle)
+            {
+                MessageBox.Show("Detailbearbeitung wird geöffnet");
+            }
+            else
+            {
+                MessageBox.Show("Uuuups . . . . ");
+            }
+
         }
     }
 }

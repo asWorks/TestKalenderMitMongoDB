@@ -13,7 +13,7 @@
                     <StackPanel Orientation="Vertical">
                         <!--<TextBlock Text="{Binding Uhrzeit, StringFormat= : {0:HH:mm}}"/>-->
                         <TextBlock Text="{Binding BehandlerName}" FontSize="12"/>
-                        <TextBlock Text="{Binding PatientenName,Mode=TwoWay}" FontSize="12"/>
+                        <TextBlock Text="{Binding PatientenName,Mode=TwoWay}" FontSize="12" MouseUp="TextBlock_MouseUp"/>
                     </StackPanel>
                 </Border>
             </DataTemplate>
