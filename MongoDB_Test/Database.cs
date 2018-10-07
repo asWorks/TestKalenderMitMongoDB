@@ -28,6 +28,8 @@ namespace MongoDB_Test
             List<Behandler> liste = new List<Behandler> { new Behandler { Id = 1, Name = "Mariann" }
                                                         , new Behandler { Id = 2, Name = "Maggie" }
                                                         , new Behandler {Id=3,Name="Alexander"}
+                                                        , new Behandler {Id=4,Name="Anja"}
+                                                        , new Behandler {Id=5,Name="Hans-Günther"}
 
 
 
@@ -50,7 +52,7 @@ namespace MongoDB_Test
             List<BehandlerPatientenTermin> L;
 
 
-            for (int i = 1; i < 31; i++)
+            for (int i = 1; i < 365; i++)
             {
                 CurrTi = StartTi;
                 for (int j = 0; j < 24; j++)
@@ -60,7 +62,7 @@ namespace MongoDB_Test
                     L = new List<BehandlerPatientenTermin>();
                     foreach (var item in GetBehandler())
                     {
-                        L.Add(new BehandlerPatientenTermin(StartDat, CurrTi, item.Id, 1, item.Name, "Arpad Stöver"));
+                        L.Add(new BehandlerPatientenTermin(StartDat, CurrTi, item.Id, 99999, item.Name, "nicht belegt"));
                     }
 
                     Termin t = new Termin(StartDat, CurrTi, L);
